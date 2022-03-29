@@ -50,7 +50,7 @@ if(!defined("APP_START")) die("No Direct Access");
     <div class="form-group">
     	<div class="row">
             <div class="col-sm-2 control-label">
-                <label class="form-label">Items <span class="manadatory">*</span></label>
+                <label class="form-label">Packages <span class="manadatory">*</span></label>
             </div>
             <div class="col-sm-10">
                 <div class="panel-body table-responsive">
@@ -58,9 +58,9 @@ if(!defined("APP_START")) die("No Direct Access");
                         <thead>
                             <tr>
                                 <th width="2%" class="text-center">S.no</th>
-                                <th>Packet</th>
-                                <th width="10%" class="text-right">Unit Price</th>
-                                <th width="15%" class="text-right">Total Packet</th>
+                                <th>Package</th>
+                                <th width="10%" class="text-right">Price</th>
+                                <th width="15%" class="text-right">Total Package</th>
                                 <th width="12%" class="text-right">Total Price</th>
                                 <th width="5%">Actions</th>
                             </tr>
@@ -87,7 +87,7 @@ if(!defined("APP_START")) die("No Direct Access");
                                         	}
                                         	?>  
                                       		<select name="items[]" id="items<?php echo $sn?>"  class="item_select">
-                                        		<option value="">Select Packet</option>  
+                                        		<option value="">Select Package</option>  
 
                                                 	<?php echo $singleItem;?>
                                         
@@ -109,7 +109,7 @@ if(!defined("APP_START")) die("No Direct Access");
                                 <td class="text-center serial_number"><?php echo $sn;?></td>
                                 <td>
                                     <select name="items[]" id="items<?php echo $sn?>"  class="item_select">
-                                        <option value="">Select Packet</option>
+                                        <option value="">Select Package</option>
                                         <?php
                                         $sql="select * from items where status=1 order by title";
                                         $rs=doquery($sql, $dblink);
@@ -133,7 +133,7 @@ if(!defined("APP_START")) die("No Direct Access");
                             }
                             ?>
                             <tr>
-                                <th colspan="4" class="text-right">Total Packet</th>
+                                <th colspan="4" class="text-right">Total Package</th>
                                 <th class="text-right grand_total_item"></th>
                                 <th class="text-right">&nbsp;</th>
                             </tr>

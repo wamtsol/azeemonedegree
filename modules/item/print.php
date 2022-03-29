@@ -9,18 +9,7 @@ if(isset($_GET["id"]) && !empty($_GET["id"])){
 		
 		
 		
-		if($r[ "type" ]==1)
-		{
-			// get item quantity
-			$item_qty=doquery("SELECT sum(item_group.quantity) AS 'TotalPcs' from item_group where item_group.group_item_id='".slash($id)."'",$dblink);
-			if(numrows($rs)>0)
-			{
-				
-				$arr=dofetch($item_qty);
-				$itemQuantity =$arr['TotalPcs'];
-			}
-		}
-		else
+		
 		$itemQuantity=1;
 		
 		

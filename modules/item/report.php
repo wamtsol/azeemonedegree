@@ -18,12 +18,12 @@ $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
 $spreadsheet->getProperties()
         ->setCreator($site_title)
         ->setLastModifiedBy($site_title)
-        ->setTitle('Stock List')
-        ->setSubject('List of All Available Stock')
+        ->setTitle('Package List')
+        ->setSubject('List of All Available Packages')
         ->setDescription('')
         ->setKeywords('')
         ->setCategory('');
-$spreadsheet->setActiveSheetIndex(0)->setCellValue('A1', 'Stock List');
+$spreadsheet->setActiveSheetIndex(0)->setCellValue('A1', 'Package List');
 $spreadsheet->setActiveSheetIndex(0)->mergeCells("A1:F4");
 $spreadsheet->setActiveSheetIndex(0)->getStyle('A1:F4')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER)->setVERTICAL(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 $spreadsheet->setActiveSheetIndex(0)->getStyle('A1:F4')->getFont()->setBold(true)->setSize(20);
@@ -31,10 +31,8 @@ $spreadsheet->setActiveSheetIndex(0)->getStyle('A1:F4')->getFont()->setBold(true
 $spreadsheet->setActiveSheetIndex(0)
         ->setCellValue('A5', 'S.No')
 		->setCellValue('B5', 'Name')
-		->setCellValue('C5', 'Urdu Name')
-		->setCellValue('D5', 'Packing')
-		->setCellValue('E5', 'Rate/Piece')
-		->setCellValue('F5', 'Packet Price');
+		->setCellValue('C5', 'Rate/Piece')
+		->setCellValue('D5', 'Package Price');
 $extra='';
 if(isset($_SESSION["items"]["list"]["q"]) && !empty($_SESSION["items"]["list"]["q"])){
 	$q=$_SESSION["items"]["list"]["q"];
@@ -70,23 +68,14 @@ $rs=doquery($sql, $dblink);
 if(numrows($rs)>0){
 	$sn=6;
 	while($r=dofetch($rs)){
-		$unit = array();
-		if( $r["type"] == 0 ) {
+		
 			$unit[]=1;
-		}
-		else{
-			$children = doquery("select quantity from item_group where group_item_id = '".$r["id"]."'", $dblink);
-			while($child=dofetch($children)){
-				$unit[] = $child[ "quantity" ];
-			}
-		}
+		
 		$spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A'.$sn, $sn-5)
 			->setCellValue('B'.$sn, unslash($r["title"]))
-			->setCellValue('C'.$sn, unslash($r["name_in_urdu_text"]))
-			->setCellValue('D'.$sn, implode("/", $unit))
-			->setCellValue('E'.$sn, curr_format($r["unit_price"]/$unit[0]))
-			->setCellValue('F'.$sn, curr_format($r["unit_price"]));
+			->setCellValue('C'.$sn, curr_format($r["unit_price"]/$unit[0]))
+			->setCellValue('D'.$sn, curr_format($r["unit_price"]));
 		$spreadsheet->setActiveSheetIndex(0)->getStyle("A".$sn.":F".$sn."")->applyFromArray(
 			array(
 				'borders' => array(

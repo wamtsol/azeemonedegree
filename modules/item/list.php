@@ -52,9 +52,9 @@ if( isset( $_SESSION["items"]["list"]["order"] ) ){
 $orderby = $order_by." ".$order;
 ?>
 <div class="page-header">
-	<h1 class="title">Manage Packet</h1>
+	<h1 class="title">Manage Package</h1>
   	<ol class="breadcrumb">
-    	<li class="active">All the administrators who can use the manage packet</li>
+    	<li class="active">All the administrators who can use the manage package</li>
   	</ol>
   	<div class="right">
     	<div class="btn-group" role="group" aria-label="..."> 
@@ -62,7 +62,7 @@ $orderby = $order_by." ".$order;
             <a id="topstats" class="btn btn-light" href="#"><i class="fa fa-search"></i></a> 
             <!-- <a class="btn print-btn" href="items_manage.php?tab=report"><i class="fa fa-print" aria-hidden="true"></i></a> -->
             <!-- <a class="btn btn-primary" href="items_manage.php?tab=update_items"><i  aria-hidden="true"></i>Update Item</a> -->
-            <a class="btn btn-primary" href="items_manage.php?tab=stock_csv"><i  aria-hidden="true"></i>Stock CSV</a>
+            <a class="btn btn-primary" href="items_manage.php?tab=stock_csv"><i  aria-hidden="true"></i>Package CSV</a>
         </div> 
     </div>  
 </div>        

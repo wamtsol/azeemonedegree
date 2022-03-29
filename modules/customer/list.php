@@ -23,7 +23,8 @@ if(!empty($q)){
   	</ol>
   	<div class="right">
     	<div class="btn-group" role="group" aria-label="..."> 
-        	<a href="customer_manage.php?tab=add" class="btn btn-light editproject">Add New Record</a> <a id="topstats" class="btn btn-light" href="#"><i class="fa fa-search"></i></a> <a class="btn btn-light" href="#"><i class="fa fa-line-chart"></i></a> 
+        	<a href="customer_manage.php?tab=add" class="btn btn-light editproject">Add New Record</a> 
+            <a id="topstats" class="btn btn-light" href="#"><i class="fa fa-search"></i></a>
         </div>
   	</div>
 </div>

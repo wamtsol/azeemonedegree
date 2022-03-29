@@ -7,7 +7,7 @@ if(isset($_GET["id"]) && !empty($_GET["id"])){
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Invoice</title>
+<title>Bill</title>
 <style>
 @font-face {
     font-family: 'NafeesRegular';
@@ -327,23 +327,23 @@ h6 {
     <div id="logo"><img src="<?php echo $file_upload_root;?>config/<?php echo get_config("reciept_logo");?>" />
     <?php echo get_config("address_phone")?>
     </div>
-    <div id="receipt">RECEIPT</div>
+    <div id="receipt">BILL</div>
     <div class="contentbox">
     	<?php
-		$ts = strtotime( $sale["datetime_added"] );
-		$count = dofetch(doquery( "select count(1) from sales where datetime_added >= '".date("Y-m-01 00:00:00", $ts)."' and datetime_added<'".date("Y-m-d H:i:s", $ts)."'", $dblink ));
-		$invoice_id = $count["count(1)"]+1;
+		// $ts = strtotime( $sale["datetime_added"] );
+		// $count = dofetch(doquery( "select count(1) from sales where datetime_added >= '".date("Y-m-01 00:00:00", $ts)."' and datetime_added<'".date("Y-m-d H:i:s", $ts)."'", $dblink ));
+		// $invoice_id = $count["count(1)"]+1;
 		$balance = 0;
         $balance = get_customer_balance($sale["customer_id"]);
 		?>
-        <p>Invoice ID: <strong style="float:right"><?php echo $invoice_id; ?>/<?php echo date("m", $ts)?>/<?php echo date("y", $ts)?></strong></p>
+        <p>Bill #: <strong style="float:right"><?php echo $r["id"]; ?></strong></p>
         <p>Date/Time: <strong style="float:right"><?php echo datetime_convert($sale["datetime_added"]); ?></strong></p>
         <p>Customer Name: <strong style="float:right"><?php echo get_field($sale["customer_id"], "customer", "customer_name"); ?></strong></p>
         <p>Phone: <strong style="float:right"><?php echo get_field($sale["customer_id"], "customer", "phone"); ?></strong></p>
         <table cellpadding="0" cellspacing="0" align="center" width="800" border="0" class="items">
             <tr>
                 <th width="5%">S#</th>
-                <th width="65%">Item</th>
+                <th width="65%">Package</th>
                 <th width="10%">Qty</th>
                 <th width="10%">Rate</th>
                 <th width="10%">Amount</th>

@@ -1,163 +1,93 @@
 <?php
-date_default_timezone_set('Asia/karachi');
-include('vendor/autoload.php');
-
-$helper = new \PhpOffice\PhpSpreadsheet\Helper\Sample();
-if (!defined('EOL')) {
-    define('EOL', $helper->isCli() ? PHP_EOL : '<br />');
-}
-// Return to the caller script when runs by CLI
-/*if ($helper->isCli()) {
-	echo 'Hello';
-    return;
-}*/
-
-// Create new Spreadsheet object
-$spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
-// Set document properties
-$spreadsheet->getProperties()
-        ->setCreator($site_title)
-        ->setLastModifiedBy($site_title)
-        ->setTitle('Sales List')
-		->setSubject('List of All Available Sales')
-        ->setDescription('')
-        ->setKeywords('')
-        ->setCategory('');
-$spreadsheet->setActiveSheetIndex(0)->setCellValue('A1', 'Sales List');
-$spreadsheet->setActiveSheetIndex(0)->mergeCells("A1:G4");
-$spreadsheet->setActiveSheetIndex(0)->getStyle('A1:G4')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER)->setVERTICAL(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-$spreadsheet->setActiveSheetIndex(0)->getStyle('A1:G4')->getFont()->setBold(true)->setSize(20);
-// Add some data
-$spreadsheet->setActiveSheetIndex(0)
-        ->setCellValue('A5', 'S.No')
-		->setCellValue('B5', 'Date')
-		->setCellValue('C5', 'Customer Name')
-		->setCellValue('D5', 'Total Items')
-		->setCellValue('E5', 'Total Price')
-		->setCellValue('F5', 'Discount')
-		->setCellValue('G5', 'Net Price')
-		->setCellValue('D10', 'Total');
-$extra='';
-if(isset($_SESSION["sales"]["list"]["date_from"]) && !empty($_SESSION["sales"]["list"]["date_from"])){
-	$date_from=$_SESSION["sales"]["list"]["date_from"];
-	$extra.=" and datetime_added>='".datetime_dbconvert($date_from)."'";
-}
-if(isset($_SESSION["sales"]["list"]["date_to"]) && !empty($_SESSION["sales"]["list"]["date_to"])){
-	$date_to=$_SESSION["sales"]["list"]["date_to"];
-	$extra.=" and datetime_added<'".datetime_dbconvert($date_to)."'";
-}
-if(isset($_SESSION["sales"]["list"]["q"]) && !empty($_SESSION["sales"]["list"]["q"])){
-	$q=$_SESSION["sales"]["list"]["q"];
-	$extra.=" and customer_name like '%".$q."%'";
+if(!defined("APP_START")) die("No Direct Access");
+$rs = doquery( $sql, $dblink );
+$total_pkg = $total_price = 0;
+?>
+<style>
+h1, h2, h3, p {
+    margin: 0 0 10px;
 }
 
-$order_by = "customer_name";
-$order = "asc";
-if( isset( $_SESSION["sales"]["list"]["order_by"] ) ){
-	$order_by = $_SESSION["sales"]["list"]["order_by"];
+body {
+    margin:  0;
+    font-family:  Arial;
+    font-size:  11px;
 }
-if( isset( $_SESSION["sales"]["list"]["order"] ) ){
-	$order = $_SESSION["sales"]["list"]["order"];
+.head th, .head td{ border:0;}
+th, td {
+    border: solid 1px #000;
+    padding: 5px 5px;
+    font-size: 11px;
+	vertical-align:top;
 }
-$orderby = $order_by." ".$order;
-$sql="select * from sales where 1 $extra order by $orderby";
-$rs=doquery($sql, $dblink);
-if(numrows($rs)>0){
-	$sn=6;
-	$total_items = $total_price = $discount = $net_price = 0;
-	while($r=dofetch($rs)){
-		
-		$total_items += $r["total_items"];
-		$total_price += $r["total_price"];
-		$discount += $r["discount"];
-		$net_price += $r["net_price"];
-		
-		$spreadsheet->setActiveSheetIndex(0)
-		
-			->setCellValue('A'.$sn, $sn-5)
-			->setCellValue('B'.$sn, datetime_convert($r["datetime_added"]))
-			->setCellValue('C'.$sn, unslash($r["customer_name"]))
-			->setCellValue('D'.$sn, unslash($r["total_items"]))
-			->setCellValue('E'.$sn, $r["total_price"])
-			->setCellValue('F'.$sn, $r["discount"])
-			->setCellValue('G'.$sn, $r["net_price"]);
-			
-		
-		$spreadsheet->setActiveSheetIndex(0)->getStyle("A".$sn.":G".$sn."")->applyFromArray(
-			array(
-				'borders' => array(
-					'allborders' => array(
-						'style' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-						'color' => array('rgb' => '000000')
-					)
-				)
-			)
-		);
-		$sn++;
-		
+table table th, table table td{
+	padding:3px;
+}
+table {
+    border-collapse:  collapse;
+	max-width:1200px;
+	margin:0 auto;
+}
+</style>
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr class="head">
+	<th colspan="7">
+    	<h1><?php echo get_config( 'site_title' )?></h1>
+    	<h2>Bill List</h2>
+        <p>
+        	<?php
+			echo "List of";
+			if( !empty( $date_from ) || !empty( $date_to ) ){
+				echo "<br />Date";
+			}
+			if( !empty( $date_from ) ){
+				echo " from ".$date_from;
+			}
+			if( !empty( $date_to ) ){
+				echo " to ".$date_to."<br>";
+			}
+			if( !empty( $customer_id ) ){
+				echo " Customer: ".get_field($customer_id, "customer","customer_name")."<br>";
+			}
+			?>
+        </p>
+    </th>
+</tr>
+<tr>
+    <th width="5%" align="center">S.no</th>
+    <th width="5%" align="center">Bill #</th>
+	<th width="10%">Date</th>
+    <th width="20%">Customer Name</th>
+    <th align="right" width="12%">Total Package</th>
+    <th align="right" width="12%">Total Price</th>
+</tr>
+<?php
+if( numrows( $rs ) > 0 ) {
+	$sn = 1;
+	while( $r = dofetch( $rs ) ) {
+		// $ts = strtotime( $r["datetime_added"] );
+		// $count = dofetch(doquery( "select count(1) from sales where datetime_added >= '".date("Y-m-01 00:00:00", $ts)."' and datetime_added<'".date("Y-m-d H:i:s", $ts)."'", $dblink ));
+		// $invoice_id = $count["count(1)"]+1;
+		$total_pkg += $r["total_items"];
+		$total_price += $r["net_price"];
+		?>
+		<tr>
+        	<td align="center"><?php echo $sn++?></td>
+           	<td align="center"><?php echo $r["id"]?></td>
+			<td><?php echo datetime_convert($r["datetime_added"]); ?></td>
+			<td><?php echo unslash($r["customer_name"]); ?></td>
+			<td align="right"><?php echo unslash($r["total_items"]); ?></td>
+			<td align="right"><?php echo curr_format(unslash($r["net_price"])); ?></td>
+        </tr>
+		<?php
 	}
 }
-		
-$spreadsheet->setActiveSheetIndex(0)->getStyle("A5:G5")->applyFromArray(
-    array(
-        'borders' => array(
-            'allborders' => array(
-                'style' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                'color' => array('rgb' => '000000')
-            )
-        )
-    )
-);
-
-$spreadsheet->setActiveSheetIndex(0)
-		->setCellValue('A'.$sn, "Total");
-$spreadsheet->setActiveSheetIndex(0)->mergeCells("A".$sn.":C".$sn);
-$spreadsheet->setActiveSheetIndex(0)->getStyle("A".$sn.":C".$sn)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT)->setVERTICAL(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-$spreadsheet->setActiveSheetIndex(0)
-		->setCellValue('D'.$sn, $total_items);
-$spreadsheet->setActiveSheetIndex(0)
-		->setCellValue('E'.$sn, $total_price);
-$spreadsheet->setActiveSheetIndex(0)
-		->setCellValue('F'.$sn, $discount);
-$spreadsheet->setActiveSheetIndex(0)
-		->setCellValue('G'.$sn, $net_price);
-
-$spreadsheet->setActiveSheetIndex(0)->getStyle("A".$sn.":G".$sn)->getFont()->setBold(true);
-$spreadsheet->setActiveSheetIndex(0)->getStyle("A".$sn.":G".$sn)->applyFromArray(
-    array(
-        'borders' => array(
-            'allborders' => array(
-                'style' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                'color' => array('rgb' => '000000')
-            )
-        )
-    )
-);
-
-$spreadsheet->setActiveSheetIndex(0)->getStyle("A5:G5")->getFont()->setBold(true);
-
-$spreadsheet->setActiveSheetIndex(0)->getColumnDimension('A')->setAutoSize(true);
-$spreadsheet->setActiveSheetIndex(0)->getColumnDimension('B')->setAutoSize(true);
-$spreadsheet->setActiveSheetIndex(0)->getColumnDimension('C')->setAutoSize(true);
-$spreadsheet->setActiveSheetIndex(0)->getColumnDimension('D')->setAutoSize(true);
-$spreadsheet->setActiveSheetIndex(0)->getColumnDimension('E')->setAutoSize(true);
-$spreadsheet->setActiveSheetIndex(0)->getColumnDimension('F')->setAutoSize(true);
-$spreadsheet->setActiveSheetIndex(0)->getColumnDimension('G')->setAutoSize(true);
-// Save
-// Redirect output to a client's web browser (Xls)
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="SaleList"');
-header('Cache-Control: max-age=0');
-// If you're serving to IE 9, then the following may be needed
-header('Cache-Control: max-age=1');
-
-// If you're serving to IE over SSL, then the following may be needed
-header('Expires: '.date("D, d M Y H:i:s").' GMT'); // Date in the past
-header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
-header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-header('Pragma: public'); // HTTP/1.0
-
-$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Excel2007');
-$writer->save('php://output');
-die;
 ?>
+<tr>
+    <th colspan="4" style="text-align:right;">Total</th>
+    <th style="text-align:right;"><?php echo curr_format($total_pkg);?></th>
+	<th style="text-align:right;"><?php echo curr_format($total_price);?></th>
+</tr>
+</table>
+<?php
+die;

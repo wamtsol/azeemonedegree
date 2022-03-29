@@ -11,8 +11,7 @@ if(!defined("APP_START")) die("No Direct Access");
     	<div class="btn-group" role="group" aria-label="..."> 
         	<a href="sales_manage.php?tab=add" class="btn btn-light editproject">Add New Record</a> 
             <a id="topstats" class="btn btn-light" href="#"><i class="fa fa-search"></i></a> 
-            <!-- <a class="btn print-btn" href="sales_manage.php?tab=report"><i class="fa fa-print" aria-hidden="true"></i></a> -->
-            <a class="btn print-btn" href="sales_manage.php?tab=town_csv">Town CSV</a>  
+            <a class="btn print-btn" href="sales_manage.php?tab=report"><i class="fa fa-print" aria-hidden="true"></i></a>
         </div>
   	</div>
 </div>
@@ -27,6 +26,21 @@ if(!defined("APP_START")) die("No Direct Access");
                 <span class="col-sm-1 text-to">To</span>
                 <div class="col-sm-2">
                     <input type="text" title="Enter Date To" name="date_to" id="date_to" placeholder="" class="form-control date-picker" value="<?php echo $date_to?>" autocomplete="off">
+                </div>
+                <div class="col-sm-2">
+                	<select name="customer_id" id="customer_id" class="custom_select">
+                        <option value=""<?php echo ($customer_id=="")? " selected":"";?>>Select Customer</option>
+                        <?php
+                            $res=doquery("select * from customer order by customer_name ",$dblink);
+                            if(numrows($res)>=0){
+                                while($rec=dofetch($res)){
+                                ?>
+                                <option value="<?php echo $rec["id"]?>" <?php echo($customer_id==$rec["id"])?"selected":"";?>><?php echo unslash($rec["customer_name"])?></option>
+                                <?php
+                                }
+                            }	
+                        ?>
+                    </select>
                 </div>
                 <div class="col-sm-2">
                   <input type="text" title="Enter String" value="<?php echo $q;?>" name="q" id="search" class="form-control" >  
@@ -47,8 +61,8 @@ if(!defined("APP_START")) die("No Direct Access");
                 <th class="text-center" width="3%"><div class="checkbox checkbox-primary">
                     <input type="checkbox" id="select_all" value="0" title="Select All Records">
                     <label for="select_all"></label></div></th>
-                <th width="8%">Invoice #</th>
-                <th width="10%">
+                <th width="8%">Bill #</th>
+                <th width="12%">
                 	<a href="sales_manage.php?order_by=datetime_added&order=<?php echo $order=="asc"?"desc":"asc"?>" class="sorting">
                         Date
                         <?php
@@ -62,9 +76,9 @@ if(!defined("APP_START")) die("No Direct Access");
                             ?>
  					</a>
                 </th>
-                <th width="15%">Customer Name</th>
-                <th class="text-right" width="8%">Total Packet</th>
-                <th class="text-right" width="8%">
+                <th>Customer Name</th>
+                <th class="text-right" width="12%">Total Package</th>
+                <th class="text-right" width="12%">
                 	<a href="sales_manage.php?order_by=total_price&order=<?php echo $order=="asc"?"desc":"asc"?>" class="sorting">
                 		Total Price
                         <?php
@@ -89,9 +103,9 @@ if(!defined("APP_START")) die("No Direct Access");
             if(numrows($rs)>0){
                 $sn=1;
                 while($r=dofetch($rs)){    
-                    $ts = strtotime( $r["datetime_added"] );
-                    $count = dofetch(doquery( "select count(1) from sales where datetime_added >= '".date("Y-m-01 00:00:00", $ts)."' and datetime_added<'".date("Y-m-d H:i:s", $ts)."'", $dblink ));
-                    $invoice_id = $count["count(1)"]+1;         
+                    // $ts = strtotime( $r["datetime_added"] );
+                    // $count = dofetch(doquery( "select count(1) from sales where datetime_added >= '".date("Y-m-01 00:00:00", $ts)."' and datetime_added<'".date("Y-m-d H:i:s", $ts)."'", $dblink ));
+                    // $invoice_id = $count["count(1)"]+1;         
                     ?>
                     <tr>
                         <td class="text-center"><?php echo $sn;?></td>
@@ -99,7 +113,7 @@ if(!defined("APP_START")) die("No Direct Access");
                             <input type="checkbox" name="id[]" id="<?php echo "rec_".$sn?>"  value="<?php echo $r["id"]?>" title="Select Record" />
                             <label for="<?php echo "rec_".$sn?>"></label></div>
                         </td>
-                        <td><?php echo $invoice_id;?></td>
+                        <td><?php echo $r["id"];?></td>
                         <td><?php echo datetime_convert($r["datetime_added"]); ?></td>
                         <td><?php echo unslash($r["customer_name"]); ?></td>
                         <td class="text-right"><?php echo unslash($r["total_items"]); ?></td>

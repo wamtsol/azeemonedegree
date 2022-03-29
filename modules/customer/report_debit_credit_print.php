@@ -61,14 +61,14 @@ if(numrows($rs)>0){
 	</tr>
 	<?php
 	while($r=dofetch($rs)){
-		$ts = strtotime( $r["date"] );
-		$count = dofetch(doquery( "select count(1) from sales where datetime_added >= '".date("Y-m-01 00:00:00", $ts)."' and datetime_added<'".date("Y-m-d H:i:s", $ts)."'", $dblink ));
-		$invoice_id = $count["count(1)"]+1;
+		// $ts = strtotime( $r["date"] );
+		// $count = dofetch(doquery( "select count(1) from sales where datetime_added >= '".date("Y-m-01 00:00:00", $ts)."' and datetime_added<'".date("Y-m-d H:i:s", $ts)."'", $dblink ));
+		// $invoice_id = $count["count(1)"]+1;
 		?>
 		<tr>
 			<td class="text-center"><?php echo $sn;?></td>
 			<td><?php echo datetime_convert($r["date"]); ?></td>
-			<td class="print_view"><?php echo unslash($r["details"])."TT- ".$invoice_id."/".date("m", $ts)."/".date("y", $ts); ?></td>
+			<td class="print_view"><?php echo unslash($r["details"]); ?></td>
 			<td align="right"><?php echo curr_format($r["debit"]); ?></td>
 			<td align="right"><?php echo curr_format($r["credit"]); ?></td>
 			<td align="right"><?php if($order == 'asc'){$balance += ($r["credit"])-$r["debit"]*($order == 'desc'?'-1':1);} echo curr_format( $balance ); if($order == 'desc'){$balance += ($r["credit"]-$r["debit"])*($order == 'desc'?'-1':1);} ?></td>

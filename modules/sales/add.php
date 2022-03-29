@@ -61,7 +61,7 @@ else{
     <div class="form-group">
     	<div class="row">
             <div class="col-sm-2 control-label">
-                <label class="form-label">Items <span class="manadatory">*</span></label>
+                <label class="form-label">Packages <span class="manadatory">*</span></label>
             </div>
             <div class="col-sm-10">
                 <div class="panel-body table-responsive">
@@ -69,9 +69,9 @@ else{
                         <thead>
                             <tr>
                                 <th width="2%" class="text-center">S.no</th>
-                                <th>Packet</th>
-                                <th width="10%" class="text-right">Unit Price</th>
-                                <th width="15%" class="text-right">Total Packet</th>
+                                <th>Package</th>
+                                <th width="10%" class="text-right">Price</th>
+                                <th width="15%" class="text-right">Total Package</th>
                                 <th width="12%" class="text-right">Total Price</th>
                                 <th width="5%">Actions</th>
                             </tr>
@@ -98,7 +98,7 @@ else{
                                                 }
                                                 ?>
                                                 <select name="items[]" class="item_select" >
-                                                	<option value="">Select Packet</option>
+                                                	<option value="">Select Package</option>
  
                                                 		<?php echo $singleItem;?>
 
@@ -135,7 +135,7 @@ else{
                                         ?>
                                         
                                       <select name="items[]" class="item_select">
-                                        <option value="">Select Packet</option>  
+                                        <option value="">Select Package</option>  
 
                                                 	<?php echo $singleItem;?>
                                     </select>
@@ -150,7 +150,7 @@ else{
                             }
                             ?>
                             <tr>
-                                <th colspan="4" class="text-right">Total Packet</th>
+                                <th colspan="4" class="text-right">Total Package</th>
                                 <th class="text-right grand_total_item"></th>
                                 <th class="text-right">&nbsp;</th>
                             </tr>

@@ -20,10 +20,12 @@ if(isset($_GET["date_from"])){
 	$date_from=slash($_GET["date_from"]);
 	$_SESSION["sales"]["list"]["date_from"]=$date_from;
 }
-if(isset($_SESSION["sales"]["list"]["date_from"]))
+if(isset($_SESSION["sales"]["list"]["date_from"])){
 	$date_from=$_SESSION["sales"]["list"]["date_from"];
-else
+}
+else{
 	$date_from="";
+}
 if($date_from != ""){
 	$extra.=" and datetime_added>='".date("Y/m/d H:i:s", strtotime(date_dbconvert($date_from)))."'";
 	$is_search=true;
@@ -32,10 +34,12 @@ if(isset($_GET["date_to"])){
 	$date_to=slash($_GET["date_to"]);
 	$_SESSION["sales"]["list"]["date_to"]=$date_to;
 }
-if(isset($_SESSION["sales"]["list"]["date_to"]))
+if(isset($_SESSION["sales"]["list"]["date_to"])){
 	$date_to=$_SESSION["sales"]["list"]["date_to"];
-else
+}
+else{
 	$date_to="";
+}
 if($date_to != ""){
 	$extra.=" and datetime_added<'".date("Y/m/d", strtotime(date_dbconvert($date_to))+3600*24)."'";
 	$is_search=true;
@@ -44,12 +48,28 @@ if(isset($_GET["q"])){
 	$q=slash($_GET["q"]);
 	$_SESSION["sales"]["list"]["q"]=$q;
 }
-if(isset($_SESSION["sales"]["list"]["q"]))
+if(isset($_SESSION["sales"]["list"]["q"])){
 	$q=$_SESSION["sales"]["list"]["q"];
-else
+}
+else{
 	$q="";
+}
 if(!empty($q)){
 	$extra.=" and (b.customer_name like '%".$q."%' or a.id='".$q."')";
+	$is_search=true;
+}
+if(isset($_GET["customer_id"])){
+	$customer_id=slash($_GET["customer_id"]);
+	$_SESSION["sales"]["list"]["customer_id"]=$customer_id;
+}
+if(isset($_SESSION["sales"]["list"]["customer_id"])){
+	$customer_id=$_SESSION["sales"]["list"]["customer_id"];
+}
+else{
+	$customer_id="";
+}
+if($customer_id!=""){
+	$extra.=" and customer_id='".$customer_id."'";
 	$is_search=true;
 }
 $order_by = "datetime_added";
