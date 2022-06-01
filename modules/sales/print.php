@@ -386,7 +386,7 @@ h6 {
 		<?php $barcode = str_repeat('0', 7-strlen($sale["id"])).$sale["id"];?>
         <p style="text-align: center; padding-top:30px;"><span class="barcode"><img src="barcode.php?text=<?php echo $barcode?>&size=20&print=true" /></span></p>
     </div>
-    <div id="signcompny">Software developed by wamtSol http://wamtsol.com/ - 0346 3891 662</div> 
+    <!-- <div id="signcompny">Software developed by wamtSol http://wamtsol.com/ - 0346 3891 662</div>  -->
 </div>
 </body>
 </html>
