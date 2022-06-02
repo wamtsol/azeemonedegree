@@ -61,7 +61,7 @@ if(!defined("APP_START")) die("No Direct Access");
                 <th class="text-center" width="3%"><div class="checkbox checkbox-primary">
                     <input type="checkbox" id="select_all" value="0" title="Select All Records">
                     <label for="select_all"></label></div></th>
-                <th width="8%">Bill #</th>
+                <th width="5%">Bill #</th>
                 <th width="12%">
                 	<a href="sales_manage.php?order_by=datetime_added&order=<?php echo $order=="asc"?"desc":"asc"?>" class="sorting">
                         Date
@@ -77,8 +77,9 @@ if(!defined("APP_START")) die("No Direct Access");
  					</a>
                 </th>
                 <th>Customer Name</th>
+                <th width="10%">Phone</th>
                 <th class="text-right" width="12%">Total Package</th>
-                <th class="text-right" width="12%">
+                <th class="text-right" width="10%">
                 	<a href="sales_manage.php?order_by=total_price&order=<?php echo $order=="asc"?"desc":"asc"?>" class="sorting">
                 		Total Price
                         <?php
@@ -92,6 +93,7 @@ if(!defined("APP_START")) die("No Direct Access");
                             ?>
                     </a>
                 </th>
+                <th width="15%" class="text-right">Payment Amount</th>
                 <th class="text-center" width="5%">Status</th>
                 <th class="text-center" width="10%">Actions</th>
             </tr>
@@ -116,8 +118,21 @@ if(!defined("APP_START")) die("No Direct Access");
                         <td><?php echo $r["id"];?></td>
                         <td><?php echo datetime_convert($r["datetime_added"]); ?></td>
                         <td><?php echo unslash($r["customer_name"]); ?></td>
+                        <td><?php echo unslash($r["phone"]); ?></td>
                         <td class="text-right"><?php echo unslash($r["total_items"]); ?></td>
-                        <td class="text-right"><?php echo curr_format(unslash($r["net_price"])); ?></td>                        
+                        <td class="text-right"><?php echo curr_format(unslash($r["net_price"])); ?></td>  
+                        <td class="text-right">
+                            <?php
+                                $payment_amounts = doquery("select * from customer_payment where id = '".$r["customer_payment_id"]."'", $dblink);
+                                if(numrows($payment_amounts)>0){
+                                    $payment_amount = dofetch($payment_amounts);
+                                    echo curr_format($payment_amount["amount"]); 
+                                }
+                                else{
+                                    echo "Payment not received";
+                                }
+                            ?>
+                        </td>                        
                         <td class="text-center"><a href="sales_manage.php?id=<?php echo $r['id'];?>&tab=status&s=<?php echo ($r["status"]==0)?1:0;?>">
                             <?php
                             if($r["status"]==0){
@@ -144,7 +159,7 @@ if(!defined("APP_START")) die("No Direct Access");
                 }
                 ?>
                 <tr>
-                    <td colspan="5" class="actions">
+                    <td colspan="7" class="actions">
                         <select name="bulk_action" id="bulk_action" title="Choose Action">
                             <option value="null">Bulk Action</option>
                             <option value="delete">Delete</option>
@@ -160,7 +175,7 @@ if(!defined("APP_START")) die("No Direct Access");
             else{	
                 ?>
                 <tr>
-                    <td colspan="9"  class="no-record">No Result Found</td>
+                    <td colspan="11"  class="no-record">No Result Found</td>
                 </tr>
                 <?php
             }

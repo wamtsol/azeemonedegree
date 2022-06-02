@@ -87,7 +87,7 @@ if( isset( $_SESSION["sales"]["list"]["order"] ) ){
 	$order = $_SESSION["sales"]["list"]["order"];
 }
 $orderby = $order_by." ".$order;
-$sql="select a.*, b.customer_name from sales a inner join customer b on a.customer_id = b.id where 1 $extra order by $orderby";
+$sql="select a.*, b.customer_name, b.phone from sales a inner join customer b on a.customer_id = b.id where 1 $extra order by $orderby";
 switch($tab){
 	case 'add':
 		include("modules/sales/add_do.php");
