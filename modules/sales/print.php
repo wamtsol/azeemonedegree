@@ -44,7 +44,7 @@ p{margin:0 0 5px 0}
 	margin-bottom: 10px;
 }
 #logo img {
-    width: 100%;
+    width: 74%;
 }
 #right_title {
 	font-size: 18px;
@@ -262,7 +262,7 @@ footer {
     font-size: 20px;
     font-weight: bold;
     margin: 10px ​auto;
-    padding: 10px;
+    padding: 5px;
 }
 #receipt {
     border: 1px solid;
@@ -271,7 +271,7 @@ footer {
     font-size: 18px;
     font-weight: bold;
     line-height: 13px;
-    margin: 10px auto 15px;
+    margin: 5px auto 10px;
     padding: 5px;
     text-align: center;
     width: 82px;
@@ -283,7 +283,7 @@ footer {
     padding: 5px;
 }
 h6 {
-    margin: 20px 0 0;
+    margin: 0px 0 0;
 }
 </style>
 		<script>
@@ -384,9 +384,10 @@ h6 {
         <!-- <?php if($sale["type"]==1){?><p><strong>Previous Amount</strong><strong style="float:right">Rs. <?php echo curr_format($balance-$sale['net_price']);?></strong></p><?php }?>
 		<?php if($sale["type"]==1){?><p><strong>Total Balance</strong><strong style="float:right">Rs. <?php echo curr_format($balance)?></strong></p><?php }?> -->
 		<?php $barcode = str_repeat('0', 7-strlen($sale["id"])).$sale["id"];?>
-        <p style="text-align: center; padding-top:30px;"><span class="barcode"><img src="barcode.php?text=<?php echo $barcode?>&size=20&print=true" /></span></p>
+        <!-- <p style="text-align: center; padding-top:30px;"><span class="barcode"><img src="barcode.php?text=<?php echo $barcode?>&size=20&print=true" /></span></p> -->
     </div>
-    <!-- <div id="signcompny">Software developed by wamtSol http://wamtsol.com/ - 0346 3891 662</div>  -->
+    <div id="signcompny"></div> 
+	<!-- <div id="signcompny">Software developed by wamtSol http://wamtsol.com/ - 0346 3891 662</div>  -->
 </div>
 </body>
 </html>

@@ -322,7 +322,8 @@ App Logo
 .applogo {
   width: 250px;
   height: 60px;
-  background: rgba(0, 0, 0, 0.14);
+  /* background: rgba(0, 0, 0, 0.14); */
+  background: #fff;
   color: #fff;
   position: relative;
   padding: 19px 0 0 0px;
@@ -1808,7 +1809,8 @@ Login Pages
   border-radius: 3px;
 }
 .login-form form img {
-  margin-bottom: 18px;
+  margin-bottom: 0px;
+  width:200px;
 }
 .login-form form .profile {
   border-radius: 999px;
@@ -4467,10 +4469,10 @@ body.popup-content {
 }
 
 .logo > img {
-    width: 160px;
+    width: 125px;
 }
 .applogo {
-    padding: 15px 0 0;
+    padding: 5px 0 5px;
 }
 .page-header .btn.btn-light:last-child {
 }
