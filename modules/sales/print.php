@@ -328,6 +328,18 @@ h6 {
     <?php echo get_config("address_phone")?>
     </div>
     <div id="receipt">BILL</div>
+	<p style="text-align: center;font-weight: bold;">
+		<?php
+			$payment_amounts = doquery("select * from customer_payment where id = '".$sale["customer_payment_id"]."'", $dblink);
+			if(numrows($payment_amounts)>0){
+				$payment_amount = dofetch($payment_amounts);
+				echo "PAID"; 
+			}
+			else{
+				echo "NOT PAID";
+			}
+		?>
+	</p>
     <div class="contentbox">
     	<?php
 		// $ts = strtotime( $sale["datetime_added"] );

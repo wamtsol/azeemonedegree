@@ -39,7 +39,7 @@ if(isset($_POST["sales_edit"])){
 		}
 	}
 	if($err==""){
-		$sql="Update sales set `datetime_added`='".slash(datetime_dbconvert($datetime_added))."', customer_id='".slash($customer_id)."' where id='".$id."'";
+		$sql="Update sales set  `datetime_added`='".slash(datetime_dbconvert($datetime_added))."', customer_id='".slash($customer_id)."' where id='".$id."'";
 		doquery($sql,$dblink);
 		
 		$grand_total_price=$total_quantity=0;

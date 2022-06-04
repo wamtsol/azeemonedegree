@@ -29,7 +29,7 @@ if(isset($_POST["sales_add"])){
 		}
 	}
 	if($err==""){
-		$sql="INSERT INTO sales (datetime_added, customer_id) VALUES ('".slash(datetime_dbconvert($datetime_added))."','".slash($customer_id)."')";
+		$sql="INSERT INTO sales (admin_id, datetime_added, customer_id) VALUES ('".$adminId."', '".slash(datetime_dbconvert($datetime_added))."','".slash($customer_id)."')";
 		doquery($sql,$dblink);
 		$sale_id=inserted_id();
 		$grand_total_price=$total_quantity=0;
