@@ -77,11 +77,11 @@ if(!defined("APP_START")) die("No Direct Access");
  					</a>
                 </th>
                 <th>Customer Name</th>
-                <th width="10%">Phone</th>
-                <th class="text-right" width="12%">Total Package</th>
-                <th class="text-right" width="10%">
+                <th width="8%">Phone</th>
+                <th class="text-right" width="8%">Package</th>
+                <th class="text-right" width="6%">
                 	<a href="sales_manage.php?order_by=total_price&order=<?php echo $order=="asc"?"desc":"asc"?>" class="sorting">
-                		Total Price
+                		Price
                         <?php
                             if( $order_by == "total_price" ) {
                                 ?>
@@ -93,7 +93,9 @@ if(!defined("APP_START")) die("No Direct Access");
                             ?>
                     </a>
                 </th>
-                <th width="15%" class="text-right">Payment Amount</th>
+                <th class="text-right" width="8%">Remaining</th>
+                <th class="text-right" width="9%">Grand Total</th>
+                <th width="12%" class="text-right">Payment Amount</th>
                 <th class="text-center" width="5%">Status</th>
                 <th class="text-center" width="10%">Actions</th>
             </tr>
@@ -120,7 +122,9 @@ if(!defined("APP_START")) die("No Direct Access");
                         <td><?php echo unslash($r["customer_name"]); ?></td>
                         <td><?php echo unslash($r["phone"]); ?></td>
                         <td class="text-right"><?php echo unslash($r["total_items"]); ?></td>
-                        <td class="text-right"><?php echo curr_format(unslash($r["net_price"])); ?></td>  
+                        <td class="text-right"><?php echo curr_format(unslash($r["net_price"])); ?></td>
+                        <td class="text-right"><?php echo curr_format(get_customer_balance($r['customer_id'], ""));?></td>
+                        <td class="text-right"><?php echo curr_format(get_customer_balance($r['customer_id'])+$r["net_price"]); ?></td>  
                         <td class="text-right">
                             <?php
                                 $payment_amounts = doquery("select * from customer_payment where id = '".$r["customer_payment_id"]."'", $dblink);
@@ -168,14 +172,14 @@ if(!defined("APP_START")) die("No Direct Access");
                         </select>
                         <input type="button" name="apply" value="Apply" id="apply_bulk_action" class="btn btn-light" title="Apply Action"  />
                     </td>
-                    <td colspan="4" class="paging" title="Paging" align="right"><?php echo pages_list($rows, "sales", $sql, $pageNum)?></td>
+                    <td colspan="6" class="paging" title="Paging" align="right"><?php echo pages_list($rows, "sales", $sql, $pageNum)?></td>
                 </tr>
                 <?php	
             }
             else{	
                 ?>
                 <tr>
-                    <td colspan="11"  class="no-record">No Result Found</td>
+                    <td colspan="13"  class="no-record">No Result Found</td>
                 </tr>
                 <?php
             }

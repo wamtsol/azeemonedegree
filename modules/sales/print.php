@@ -390,8 +390,23 @@ h6 {
         <hr style="border:0; border-top:1px solid #999">
         <?php if($sale["discount"]>0){?><p><strong>TOTAL</strong><strong style="float:right">Rs. <?php echo curr_format($sale["total_price"])?></strong></p>
         <p><strong>Discount</strong><strong style="float:right">Rs. <?php echo curr_format($sale["discount"])?></strong></p><?php }?>
-        <p><strong>Previous Balance</strong><strong style="float:right">Rs. <?php echo curr_format(get_customer_balance($sale['customer_id'], "")-$sale["net_price"]);?></strong></p>
+        <p><strong>Remaining Balance</strong><strong style="float:right">Rs. <?php echo curr_format(get_customer_balance($sale['customer_id'], "")-$sale["net_price"]);?></strong></p>
 		<p><strong>TOTAL</strong><strong style="float:right">Rs. <?php echo curr_format(get_customer_balance($sale['customer_id'], ""));?></strong></p>
+		<p>
+			<strong>Paid</strong>
+			<strong style="float:right">Rs. 
+			<?php
+				$payment_amounts = doquery("select * from customer_payment where id = '".$sale["customer_payment_id"]."'", $dblink);
+				if(numrows($payment_amounts)>0){
+					$payment_amount = dofetch($payment_amounts);
+					echo curr_format($payment_amount["amount"]); 
+				}
+				else{
+					echo "0";
+				}
+			?>
+			</strong>
+		</p>
 		<?php if($sale["cash_receive"]>0){?><p><strong>Cash Recieve</strong><strong style="float:right">Rs. <?php echo curr_format($sale["cash_receive"])?></strong></p><?php }?>
 		<?php if($sale["cash_return"]>0){?><p><strong>Cash Return</strong><strong style="float:right">Rs. <?php echo curr_format($sale["cash_return"])?></strong></p><?php }?>
         <!-- <?php if($sale["type"]==1){?><p><strong>Previous Amount</strong><strong style="float:right">Rs. <?php echo curr_format($balance-$sale['net_price']);?></strong></p><?php }?>
