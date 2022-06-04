@@ -123,8 +123,8 @@ if(!defined("APP_START")) die("No Direct Access");
                         <td><?php echo unslash($r["phone"]); ?></td>
                         <td class="text-right"><?php echo unslash($r["total_items"]); ?></td>
                         <td class="text-right"><?php echo curr_format(unslash($r["net_price"])); ?></td>
-                        <td class="text-right"><?php echo curr_format(get_customer_balance($r['customer_id'])-$r["net_price"]); ?></td>
-                        <td class="text-right"><?php echo curr_format(get_customer_balance($r['customer_id'], ""));?></td>  
+                        <td class="text-right"><?php echo curr_format(get_customer_balance($r['customer_id'], datetime_convert($r["datetime_added"]))); ?></td>
+                        <td class="text-right"><?php echo curr_format(get_customer_balance($r['customer_id'], datetime_convert($r["datetime_added"])) + $r["net_price"]); ?></td>  
                         <td class="text-right">
                             <?php
                                 $payment_amounts = doquery("select * from customer_payment where id = '".$r["customer_payment_id"]."'", $dblink);
