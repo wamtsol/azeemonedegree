@@ -95,7 +95,7 @@ if(isset($_POST["sales_edit"])){
 			}
 		}
 		unset($_SESSION["sales_manage"]["edit"]);
-		header('Location: sales_manage.php?tab=list'.($_POST["sales_edit"]!='SAVE'?'&print='.$id:'').'&msg='.url_encode("Successfully Added"));
+		header('Location: sales_manage.php?tab=list'.($_POST["sales_edit"]!='SAVE'?'&print='.$id:'').'&msg='.url_encode("Successfully Updated"));
 		die;
 	}
 	else{

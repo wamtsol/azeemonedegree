@@ -391,7 +391,6 @@ h6 {
         <?php if($sale["discount"]>0){?><p><strong>TOTAL</strong><strong style="float:right">Rs. <?php echo curr_format($sale["total_price"])?></strong></p>
         <p><strong>Discount</strong><strong style="float:right">Rs. <?php echo curr_format($sale["discount"])?></strong></p><?php }?>
         <p><strong>Remaining Balance</strong><strong style="float:right">Rs. <?php echo curr_format(get_customer_balance($sale['customer_id'], "")-$sale["net_price"]);?></strong></p>
-		<p><strong>TOTAL</strong><strong style="float:right">Rs. <?php echo curr_format(get_customer_balance($sale['customer_id'], ""));?></strong></p>
 		<p>
 			<strong>Paid</strong>
 			<strong style="float:right">Rs. 
@@ -407,6 +406,7 @@ h6 {
 			?>
 			</strong>
 		</p>
+		<p><strong>TOTAL</strong><strong style="float:right">Rs. <?php echo curr_format(get_customer_balance($sale['customer_id'], ""));?></strong></p>
 		<?php if($sale["cash_receive"]>0){?><p><strong>Cash Recieve</strong><strong style="float:right">Rs. <?php echo curr_format($sale["cash_receive"])?></strong></p><?php }?>
 		<?php if($sale["cash_return"]>0){?><p><strong>Cash Return</strong><strong style="float:right">Rs. <?php echo curr_format($sale["cash_return"])?></strong></p><?php }?>
         <!-- <?php if($sale["type"]==1){?><p><strong>Previous Amount</strong><strong style="float:right">Rs. <?php echo curr_format($balance-$sale['net_price']);?></strong></p><?php }?>
