@@ -9,7 +9,7 @@ if(isset($_POST["customer_payment_add"])){
 		$err.="Image format not supported. <br>";
 	}
 	if($err==""){
-		$sql="INSERT INTO customer_payment (customer_id, datetime_added, amount, account_id, details) VALUES ('".slash($customer_id)."','".slash(datetime_dbconvert($datetime_added))."','".slash($amount)."','".slash($account_id)."','".slash($details)."')";
+		$sql="INSERT INTO customer_payment (admin_id, customer_id, datetime_added, amount, account_id, details) VALUES ('".$adminId."', '".slash($customer_id)."','".slash(datetime_dbconvert($datetime_added))."','".slash($amount)."','".slash($account_id)."','".slash($details)."')";
 		doquery($sql,$dblink);
 		$id=inserted_id();
 		if(!empty($_FILES["payment_image"]["tmp_name"])){
@@ -19,7 +19,7 @@ if(isset($_POST["customer_payment_add"])){
 			doquery($sql1,$dblink);
 		}
 		unset($_SESSION["customer_payment_manage"]["add"]);
-		header('Location: customer_payment_manage.php?tab=list&msg='.url_encode("Sucessfully Added"));
+		header('Location: customer_payment_manage.php?tab=list&msg='.url_encode("Successfully Added"));
 		die;
 	}
 	else{

@@ -73,7 +73,7 @@ if(isset($_POST["sales_edit"])){
 		$sales = dofetch( doquery( "select * from sales where id = '".$id."' ", $dblink ) );
 		if( $payment_account_id > 0 ) {
 			if( $sales[ "customer_payment_id" ] == 0 ) {
-				doquery( "insert into customer_payment(customer_id, datetime_added, amount, account_id, details) values('".slash( $customer_id )."', '".datetime_dbconvert($datetime_added)."', '".$payment_amount."', '".$payment_account_id."', 'Receiving against Sales ID: #".$id."')", $dblink );
+				doquery( "insert into customer_payment(admin_id, customer_id, datetime_added, amount, account_id, details) values('".$adminId."', '".slash( $customer_id )."', '".datetime_dbconvert($datetime_added)."', '".$payment_amount."', '".$payment_account_id."', 'Receiving against Sales ID: #".$id."')", $dblink );
 				$customer_payment_id = inserted_id();
 				doquery( "update sales set customer_payment_id = '".$customer_payment_id."' where id ='".$id."'", $dblink);
 			}

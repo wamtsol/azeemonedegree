@@ -44,7 +44,7 @@ if(isset($_POST["sales_add"])){
 		}
 		doquery("update sales set total_items=".$total_quantity.",total_price='".$grand_total_price."', discount='".$discount."', net_price='".($grand_total_price-$discount)."', cash_receive='".$cash_receive."', cash_return='".$cash_return."' where id='".$sale_id."'", $dblink);
 		if( !empty( $payment_account_id ) && $payment_amount > 0 ) {
-			doquery( "insert into customer_payment(customer_id, account_id, datetime_added, amount, details) values( '".slash( $customer_id )."', '".slash( $payment_account_id )."', '".datetime_dbconvert($datetime_added)."', '".slash($payment_amount)."', 'Payment againset Sales #".$sale_id."' )", $dblink );
+			doquery( "insert into customer_payment(admin_id, customer_id, account_id, datetime_added, amount, details) values('".$adminId."', '".slash( $customer_id )."', '".slash( $payment_account_id )."', '".datetime_dbconvert($datetime_added)."', '".slash($payment_amount)."', 'Payment againset Sales #".$sale_id."' )", $dblink );
 			$customer_payment_id = inserted_id();
 			doquery( "update sales set customer_payment_id = '".slash( $customer_payment_id )."' where id = '".$sale_id."'", $dblink );
 		}

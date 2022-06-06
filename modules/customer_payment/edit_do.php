@@ -24,7 +24,7 @@ if(isset($_POST["customer_payment_edit"])){
 			}
 		}
 		unset($_SESSION["customer_payment_manage"]["edit"]);
-		header('Location: customer_payment_manage.php?tab=list&msg='.url_encode("Sucessfully Updated"));
+		header('Location: customer_payment_manage.php?tab=list&msg='.url_encode("Successfully Updated"));
 		die;
 	}
 	else{

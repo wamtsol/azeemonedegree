@@ -11,7 +11,26 @@ if(isset($_REQUEST["tab"]) && in_array($_REQUEST["tab"], $tab_array)){
 else{
 	$tab="list";
 }
-
+$q="";
+$extra='';
+$is_search=false;
+if(isset($_GET["q"])){
+	$q=slash($_GET["q"]);
+	$_SESSION["customer_manage"]["q"]=$q;
+}
+if(isset($_SESSION["customer_manage"]["q"]))
+	$q=$_SESSION["customer_manage"]["q"];
+else
+	$q="";
+if(!empty($q)){
+	$extra.=" and customer_name like '%".$q."%'";
+	$is_search=true;
+}
+$adminId = '0';
+if($_SESSION["logged_in_admin"]["admin_type_id"]!=1){
+	$extra.= "and a.admin_id = '".$_SESSION["logged_in_admin"]["id"]."'";
+	$adminId = $_SESSION["logged_in_admin"]["id"];
+}
 switch($tab){
 	case 'add':
 		include("modules/customer/add_do.php");

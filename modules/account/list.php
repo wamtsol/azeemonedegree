@@ -1,20 +1,6 @@
 <?php
 if(!defined("APP_START")) die("No Direct Access");
-$q="";
-$extra='';
-$is_search=false;
-if(isset($_GET["q"])){
-	$q=slash($_GET["q"]);
-	$_SESSION["account_manage"]["q"]=$q;
-}
-if(isset($_SESSION["account_manage"]["q"]))
-	$q=$_SESSION["account_manage"]["q"];
-else
-	$q="";
-if(!empty($q)){
-	$extra.=" and title like '%".$q."%'";
-	$is_search=true;
-}
+
 ?>
 <div class="page-header">
 	<h1 class="title">Account</h1>

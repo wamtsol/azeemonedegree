@@ -9,7 +9,7 @@ if(isset($_POST["account_edit"])){
 		$sql="Update account set `title`='".slash($title)."', `type`='".slash($type)."', `description`='".slash($description)."',`balance`='".slash($balance)."',`is_petty_cash`='".slash($is_petty_cash)."' where id='".$id."'";
 		doquery($sql,$dblink);
 		unset($_SESSION["account_manage"]["edit"]);
-		header('Location: account_manage.php?tab=list&msg='.url_encode("Sucessfully Updated"));
+		header('Location: account_manage.php?tab=list&msg='.url_encode("Successfully Updated"));
 		die;
 	}
 	else{

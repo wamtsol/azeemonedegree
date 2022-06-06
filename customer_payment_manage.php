@@ -23,7 +23,7 @@ if(isset($_SESSION["customer_payment"]["list"]["date_from"]))
 else
 	$date_from="";
 if($date_from != ""){
-	$extra=" and datetime_added>='".date("Y/m/d H:i:s", strtotime(date_dbconvert($date_from)))."'";
+	$extra.=" and datetime_added>='".date("Y/m/d H:i:s", strtotime(date_dbconvert($date_from)))."'";
 	$is_search=true;
 }
 if(isset($_GET["date_to"])){
@@ -35,7 +35,7 @@ if(isset($_SESSION["customer_payment"]["list"]["date_to"]))
 else
 	$date_to="";
 if($date_to != ""){
-	$extra=" and datetime_added<'".date("Y/m/d", strtotime(date_dbconvert($date_to))+3600*24)."'";
+	$extra.=" and datetime_added<'".date("Y/m/d", strtotime(date_dbconvert($date_to))+3600*24)."'";
 	$is_search=true;
 }
 if(isset($_GET["customer_id"])){
@@ -77,6 +77,11 @@ if( isset( $_SESSION["customer_payment"]["list"]["order"] ) ){
 	$order = $_SESSION["customer_payment"]["list"]["order"];
 }
 $orderby = $order_by." ".$order;
+$adminId = '0';
+if($_SESSION["logged_in_admin"]["admin_type_id"]!=1){
+	$extra.= "and a.admin_id = '".$_SESSION["logged_in_admin"]["id"]."'";
+	$adminId = $_SESSION["logged_in_admin"]["id"];
+}
 $sql="select a.*, b.customer_name, b.address from customer_payment a inner join customer b on a.customer_id = b.id where 1 ".$extra." order by $orderby";
 switch($tab){
 	case 'add':
