@@ -28,7 +28,7 @@ if(!empty($q)){
 }
 $adminId = '0';
 if($_SESSION["logged_in_admin"]["admin_type_id"]!=1){
-	$extra.= "and a.admin_id = '".$_SESSION["logged_in_admin"]["id"]."'";
+	$extra.= "and admin_id = '".$_SESSION["logged_in_admin"]["id"]."'";
 	$adminId = $_SESSION["logged_in_admin"]["id"];
 }
 switch($tab){
