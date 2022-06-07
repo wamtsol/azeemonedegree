@@ -31,7 +31,7 @@ if(!defined("APP_START")) die("No Direct Access");
                 	<select name="customer_id" id="customer_id" class="custom_select">
                         <option value=""<?php echo ($customer_id=="")? " selected":"";?>>Select Customer</option>
                         <?php
-                            $res=doquery("select * from customer order by customer_name ",$dblink);
+                            $res=doquery("select * from customer where status = 1 and admin_id = '".$adminId."' order by customer_name ",$dblink);
                             if(numrows($res)>=0){
                                 while($rec=dofetch($res)){
                                 ?>

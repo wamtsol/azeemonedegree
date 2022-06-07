@@ -45,7 +45,7 @@ else{
                 <select name="customer_id" id="" class="margin-btm-5 selectbox">
                 	<option value="">Select Customer</option>
                     <?php
-                    $rs = doquery( "select * from customer where status=1 order by customer_name", $dblink );
+                    $rs = doquery( "select * from customer a where status=1 and admin_id = '".$adminId."' order by customer_name", $dblink );
 					if( numrows( $rs ) > 0 ) {
 						while( $r = dofetch( $rs ) ) {
 							?>
@@ -179,7 +179,7 @@ else{
                                 <th class="text-right"><select name="payment_account_id" id="payment_account_id">
                                         <option value="">Select Account</option>
                                         <?php
-                                        $rs = doquery( "select * from account where status = 1 order by title", $dblink );
+                                        $rs = doquery( "select * from account where status = 1 and admin_id = '".$adminId."' order by title", $dblink );
                                         if( numrows( $rs ) > 0 ) {
                                             while( $r = dofetch( $rs ) ) {
                                                 ?>
