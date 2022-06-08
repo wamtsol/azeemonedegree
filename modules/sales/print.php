@@ -410,7 +410,7 @@ h6 {
 			?>
 			</strong>
 		</p>
-		<p><strong>Grand TOTAL</strong><strong style="float:right">Rs. <?php echo curr_format(get_customer_balance($sale['customer_id'], date_convert($sale["datetime_added"])));?></strong></p>
+		<p><strong>Grand TOTAL</strong><strong style="float:right">Rs. <?php echo curr_format(get_customer_balance($sale['customer_id']));?></strong></p>
 		<?php $barcode = str_repeat('0', 7-strlen($sale["id"])).$sale["id"];?>
         <!-- <p style="text-align: center; padding-top:30px;"><span class="barcode"><img src="barcode.php?text=<?php echo $barcode?>&size=20&print=true" /></span></p> -->
     </div>
