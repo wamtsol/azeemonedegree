@@ -63,6 +63,11 @@ if( isset( $_SESSION["items"]["list"]["order"] ) ){
 	$order = $_SESSION["items"]["list"]["order"];
 }
 $orderby = $order_by." ".$order;
+//$adminId = '0';
+//if($_SESSION["logged_in_admin"]["admin_type_id"]!=1){
+	$extra.= "and admin_id = '".$_SESSION["logged_in_admin"]["id"]."'";
+	$adminId = $_SESSION["logged_in_admin"]["id"];
+//}
 $sql="select * from items where 1 $extra order by $orderby";
 switch($tab){
 	case 'add':

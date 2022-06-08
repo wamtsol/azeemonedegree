@@ -77,7 +77,7 @@ if(!defined("APP_START")) die("No Direct Access");
                                           <?php
 											$groupItem='';
 											$singleItem='';
-                                        	$sql="select * from items where status=1 order by title";
+                                        	$sql="select * from items where status=1 and admin_id = '".$adminId."' order by title";
                                         	$rs=doquery($sql, $dblink);
                                         	if(numrows($rs)>0){
 												while($r=dofetch($rs)){
@@ -111,7 +111,7 @@ if(!defined("APP_START")) die("No Direct Access");
                                     <select name="items[]" id="items<?php echo $sn?>"  class="item_select">
                                         <option value="">Select Package</option>
                                         <?php
-                                        $sql="select * from items where status=1 order by title";
+                                        $sql="select * from items where status=1 and admin_id = '".$adminId."' order by title";
                                         $rs=doquery($sql, $dblink);
                                         if(numrows($rs)>0){
                                             while($r=dofetch($rs)){
