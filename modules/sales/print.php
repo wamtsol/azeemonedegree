@@ -348,7 +348,7 @@ h6 {
 		$balance = 0;
         $balance = get_customer_balance($sale["customer_id"], datetime_convert($sale["datetime_added"]));
 		?>
-        <p>Bill #: <strong style="float:right"><?php echo $r["id"]; ?></strong></p>
+        <p>Bill #: <strong style="float:right"><?php echo $sale["id"]; ?></strong></p>
         <p>Date/Time: <strong style="float:right"><?php echo datetime_convert($sale["datetime_added"]); ?></strong></p>
         <p>Customer Name: <strong style="float:right"><?php echo get_field($sale["customer_id"], "customer", "customer_name"); ?></strong></p>
         <p>Phone: <strong style="float:right"><?php echo get_field($sale["customer_id"], "customer", "phone"); ?></strong></p>
