@@ -354,7 +354,7 @@ h6 {
         <p>Phone: <strong style="float:right"><?php echo get_field($sale["customer_id"], "customer", "phone"); ?></strong></p>
         <table cellpadding="0" cellspacing="0" align="center" width="800" border="0" class="items">
             <tr>
-                <th width="5%">S#</th>
+                <th width="5%">Qty</th>
                 <th width="65%">Package</th>
                 <!-- <th width="10%">Qty</th> -->
                 <th width="10%">Rate</th>
@@ -374,7 +374,7 @@ h6 {
 					
                     ?>
                     <tr>
-                    	<td style="text-align:center"><?php echo $sn++?></td>
+                    	<td style="text-align:center"><?php echo implode("/",$unit)?></td>
                         <td style="text-align:left;"><?php echo unslash($item["title"])?></td>
                         <!-- <td style="text-align:center; font-size:9px;"><?php echo implode("/",$unit)?></td> -->
                         <td style="text-align:right; font-size:9px;"><?php echo implode("/",$price);?></td>
