@@ -111,7 +111,7 @@ if(!defined("APP_START")) die("No Direct Access");
                                     <select name="items[]" id="items<?php echo $sn?>"  class="item_select">
                                         <option value="">Select Package</option>
                                         <?php
-                                        $sql="select * from items where status=1 and admin_id = '".$adminIdN."' order by title";
+                                        $sql="select * from items where status=1 and admin_id = '".$adminId."' order by title";
                                         $rs=doquery($sql, $dblink);
                                         if(numrows($rs)>0){
                                             while($r=dofetch($rs)){
@@ -162,7 +162,7 @@ if(!defined("APP_START")) die("No Direct Access");
                                 <th class="text-right"><select name="payment_account_id" id="payment_account_id">
                                         <option value="">Select Account</option>
                                         <?php
-                                        $rs = doquery( "select * from account where status = 1 and admin_id = '".$adminIdN."' order by title", $dblink );
+                                        $rs = doquery( "select * from account where status = 1 and admin_id = '".$adminId."' order by title", $dblink );
                                         if( numrows( $rs ) > 0 ) {
                                             while( $r = dofetch( $rs ) ) {
                                                 ?>
