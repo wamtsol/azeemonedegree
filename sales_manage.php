@@ -91,8 +91,12 @@ $adminId = '0';
 if($_SESSION["logged_in_admin"]["admin_type_id"]!=1){
 	$extra.= "and a.admin_id = '".$_SESSION["logged_in_admin"]["id"]."'";
 	$adminId = $_SESSION["logged_in_admin"]["id"];
+	$adminIdN = " and admin_id = '".$_SESSION["logged_in_admin"]["id"]."'";
 }
-$adminIdN = $_SESSION["logged_in_admin"]["id"];
+else{
+	$adminIdN = "";
+}
+
 $sql="select a.*, b.customer_name, b.phone from sales a inner join customer b on a.customer_id = b.id where 1 $extra order by $orderby";
 switch($tab){
 	case 'add':
