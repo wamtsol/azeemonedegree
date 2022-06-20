@@ -179,7 +179,7 @@ else{
                                 <th class="text-right"><select name="payment_account_id" id="payment_account_id">
                                         <option value="">Select Account</option>
                                         <?php
-                                        $rs = doquery( "select * from account where status = 1 and admin_id = '".$adminId."' order by title", $dblink );
+                                        $rs = doquery( "select * from account where status = 1 $adminIdN order by title", $dblink );
                                         if( numrows( $rs ) > 0 ) {
                                             while( $r = dofetch( $rs ) ) {
                                                 ?>
