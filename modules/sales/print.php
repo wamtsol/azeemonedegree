@@ -346,7 +346,7 @@ h6 {
 		// $count = dofetch(doquery( "select count(1) from sales where datetime_added >= '".date("Y-m-01 00:00:00", $ts)."' and datetime_added<'".date("Y-m-d H:i:s", $ts)."'", $dblink ));
 		// $invoice_id = $count["count(1)"]+1;
 		$balance = 0;
-        $balance = get_customer_balance($sale["customer_id"], datetime_convert($sale["datetime_added"]));
+        $balance = get_customer_balance($sale["customer_id"], $sale["datetime_added"]);
 		?>
         <p>Bill #: <strong style="float:right"><?php echo $sale["id"]; ?></strong></p>
         <p>Date/Time: <strong style="float:right"><?php echo datetime_convert($sale["datetime_added"]); ?></strong></p>
@@ -390,7 +390,7 @@ h6 {
         <hr style="border:0; border-top:1px solid #999">
         <?php if($sale["discount"]>0){?><p><strong>TOTAL</strong><strong style="float:right">Rs. <?php echo curr_format($sale["total_price"])?></strong></p>
         <p><strong>Discount</strong><strong style="float:right">Rs. <?php echo curr_format($sale["discount"])?></strong></p><?php }?>
-        <p><strong>Remaining Balance</strong><strong style="float:right">Rs. <?php echo curr_format(get_customer_balance($sale["customer_id"], ""));?></strong></p>
+        <p><strong>Remaining Balance</strong><strong style="float:right">Rs. <?php echo $balance;?></strong></p>
 		<p><strong>Current Bill</strong><strong style="float:right">Rs. <?php echo curr_format($sale["net_price"]);?></strong></p>
 		<p><strong>TOTAL</strong><strong style="float:right">Rs. <?php echo curr_format($balance+$sale["net_price"]);?></strong></p>
 		<p>
