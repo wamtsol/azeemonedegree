@@ -390,7 +390,7 @@ h6 {
         <hr style="border:0; border-top:1px solid #999">
         <?php if($sale["discount"]>0){?><p><strong>TOTAL</strong><strong style="float:right">Rs. <?php echo curr_format($sale["total_price"])?></strong></p>
         <p><strong>Discount</strong><strong style="float:right">Rs. <?php echo curr_format($sale["discount"])?></strong></p><?php }?>
-        <p><strong>Remaining Balance</strong><strong style="float:right">Rs. <?php echo curr_format($balance);?></strong></p>
+        <p><strong>Remaining Balance</strong><strong style="float:right">Rs. <?php echo curr_format(get_customer_balance($sale["customer_id"], ""));?></strong></p>
 		<p><strong>Current Bill</strong><strong style="float:right">Rs. <?php echo curr_format($sale["net_price"]);?></strong></p>
 		<p><strong>TOTAL</strong><strong style="float:right">Rs. <?php echo curr_format($balance+$sale["net_price"]);?></strong></p>
 		<p>
