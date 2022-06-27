@@ -107,6 +107,8 @@ if(!defined("APP_START")) die("No Direct Access");
             if(numrows($rs)>0){
                 $sn=1;
                 while($r=dofetch($rs)){    
+                    $balance = 0;
+                    $balance = get_customer_balance($r["customer_id"], $r["datetime_added"]);
                     // $ts = strtotime( $r["datetime_added"] );
                     // $count = dofetch(doquery( "select count(1) from sales where datetime_added >= '".date("Y-m-01 00:00:00", $ts)."' and datetime_added<'".date("Y-m-d H:i:s", $ts)."'", $dblink ));
                     // $invoice_id = $count["count(1)"]+1;         
@@ -123,8 +125,8 @@ if(!defined("APP_START")) die("No Direct Access");
                         <td><?php echo unslash($r["phone"]); ?></td>
                         <td class="text-right"><?php echo unslash($r["total_items"]); ?></td>
                         <td class="text-right"><?php echo curr_format(unslash($r["net_price"])); ?></td>
-                        <td class="text-right"><?php echo curr_format(get_customer_balance($r['customer_id'], datetime_convert($r["datetime_added"]))); ?></td>
-                        <td class="text-right"><?php echo curr_format(get_customer_balance($r['customer_id'], datetime_convert($r["datetime_added"])) + $r["net_price"]); ?></td>  
+                        <td class="text-right"><?php echo $balance;?></td>
+                        <td class="text-right"><?php echo curr_format(get_customer_balance($r['customer_id'])); ?></td>  
                         <td class="text-right">
                             <?php
                                 $payment_amounts = doquery("select * from customer_payment where id = '".$r["customer_payment_id"]."'", $dblink);
