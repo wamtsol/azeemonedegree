@@ -88,7 +88,7 @@ else{
                                         	<?php
 												$groupItem='';
 												$singleItem='';
-                                                $sql="select * from items where status=1 $adminIdN order by title";
+                                                $sql="select * from items where status=1 $adminId order by title";
                                                 $rs=doquery($sql, $dblink);
                                                 if(numrows($rs)>0){
                                                     while($r=dofetch($rs)){
@@ -122,7 +122,7 @@ else{
                                         <?php
 										$groupItem='';
 										$singleItem='';
-                                        $sql="select * from items where status=1 $adminIdN order by title";
+                                        $sql="select * from items where status=1 $adminId order by title";
                                         $rs=doquery($sql, $dblink);
                                         if(numrows($rs)>0){
                                             while($r=dofetch($rs)){
