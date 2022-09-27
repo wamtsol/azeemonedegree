@@ -22,7 +22,7 @@ if(isset($_POST["purchase_add"])){
 		$i++;
 	}
 	if($err==""){
-		$sql="INSERT INTO purchase (datetime_added, supplier_id) VALUES ('".slash(datetime_dbconvert($datetime_added))."', '".slash($supplier_id)."')";
+		$sql="INSERT INTO purchase (admin_id, datetime_added, supplier_id) VALUES ('".$adminId."', '".slash(datetime_dbconvert($datetime_added))."', '".slash($supplier_id)."')";
 		doquery($sql,$dblink);
 		$purchase_id=inserted_id();
 		$grand_total_price=$quantity=0;	
@@ -42,7 +42,7 @@ if(isset($_POST["purchase_add"])){
 			doquery( "update purchase set supplier_payment_id = '".$supplier_payment_id."' where id = '".$purchase_id."'", $dblink );
 		}
 		unset($_SESSION["purchase_manage"]["add"]);
-		header('Location: purchase_manage.php?tab=list&msg='.url_encode("Sucessfully Added"));
+		header('Location: purchase_manage.php?tab=list&msg='.url_encode("Successfully Added"));
 		die;
 	}
 	else{

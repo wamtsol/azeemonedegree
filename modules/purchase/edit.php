@@ -98,7 +98,7 @@ if(!defined("APP_START")) die("No Direct Access");
                                             <select name="items[]" id="items<?php echo $sn?>" class="item_select">
                                                 <option value="">Select Item</option>
                                                 <?php
-                                                $sql="select * from items where status=1 and type=0 order by title";
+                                                $sql="select * from items where status=1 $adminIdN order by title";
                                                 $rs=doquery($sql, $dblink);
                                                 if(numrows($rs)>0){
                                                     while($r=dofetch($rs)){
@@ -127,7 +127,7 @@ if(!defined("APP_START")) die("No Direct Access");
                                     <select name="items[]" id="items<?php echo $sn?>"  class="item_select">
                                         <option value="">Select Item</option>
                                         <?php
-                                        $sql="select * from items where status=1 and type=0 order by title";
+                                        $sql="select * from items where status=1 $adminIdN order by title";
                                         $rs=doquery($sql, $dblink);
                                         if(numrows($rs)>0){
                                             while($r=dofetch($rs)){

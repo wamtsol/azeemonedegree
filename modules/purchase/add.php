@@ -110,13 +110,13 @@ else{
                                         <td class="text-center serial_number"><?php echo $sn;?></td>
                                         <td>
                                             <select name="items[]" id="items<?php echo $sn?>" class="item_select">
-                                                <option value="">Select Item</option>
+                                                <option value="">Select Package</option>
                                                 <?php
 												
 												$groupItem='';
 												$singleItem='';
 												
-                                                $sql="select * from items where 1=1 AND type='0' AND status=1 order by title";
+                                                $sql="select * from items where status=1 $adminIdN order by title";
                                                 $rs=doquery($sql, $dblink);
                                                 if(numrows($rs)>0){
                                                     while($r=dofetch($rs)){
@@ -149,16 +149,13 @@ else{
                                     <select name="items[]" id="items<?php echo $sn?>"  class="item_select">
                                         <option value="">Select Item</option>
                                         <?php
-                                        $sql="select * from items where status=1 order by title";
+                                        $sql="select * from items where status=1 $adminIdN order by title";
                                         $rs=doquery($sql, $dblink);
                                         if(numrows($rs)>0){
                                             while($r=dofetch($rs)){
                                                 ?>
-                                                <?php
-												if( $r["type"] != 1 ) {
-													?>
                                                 	<option value="<?php echo $r["id"]?>"><?php echo unslash($r["title"])?></option>
-                                                	<?php }?>
+                                                	
                                                 <?php
                                             }
                                         }
