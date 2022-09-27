@@ -86,7 +86,7 @@ if(!defined("APP_START")) die("No Direct Access");
                         </td>
                         <td class="text-center"><?php echo $r["id"]?></td>
                         <td><?php echo datetime_convert($r["datetime_added"]); ?></td>
-                        <td><?php echo unslash($r["supplier_name"])."<br />".unslash($r["phone"]); ?></td>
+                        <td><?php echo get_field($r["supplier_id"],"supplier","supplier_name")."<br />".get_field($r["supplier_id"], "supplier", "phone"); ?></td>
                         <td class="text-right"><?php echo unslash($r["total_items"]); ?></td>
                         <td class="text-right"><?php echo curr_format(unslash($r["net_price"])); ?></td>                        
                         <td class="text-center"><a href="purchase_manage.php?id=<?php echo $r['id'];?>&tab=status&s=<?php echo ($r["status"]==0)?1:0;?>">
