@@ -1284,7 +1284,7 @@ function get_supplier_balance( $supplier_id, $dt = 0 ){
 	$supplier = doquery( "select balance from supplier where id = '".$supplier_id."'", $dblink );
 	if( numrows( $supplier ) > 0 ) {
 		$supplier = dofetch( $supplier );
-		$sql="select sum(amount) as amount from (select concat( 'Purchase #', id) as transaction, net_price*if(type=0,1,-1) as amount from purchase where supplier_id = '".$supplier_id."' and datetime_added <'".$dt."' union select concat( 'Payment #', id) as transaction, -amount from supplier_payment where supplier_id = '".$supplier_id."' and datetime_added <='".$dt."') as transactions";
+		$sql="select sum(amount) as amount from (select concat( 'Purchase #', id) as transaction, net_price as amount from purchase where supplier_id = '".$supplier_id."' and datetime_added <'".$dt."' union select concat( 'Payment #', id) as transaction, -amount from supplier_payment where supplier_id = '".$supplier_id."' and datetime_added <='".$dt."') as transactions";
 		$balance=dofetch(doquery($sql,$dblink));
 		$balance = $supplier["balance"] + $balance[ "amount" ];
 	}
