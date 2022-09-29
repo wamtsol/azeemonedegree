@@ -25,7 +25,7 @@ function show_page($rows, $pageNum, $query){
 	return $result;
 }
 
-function pages_list($rowsPerPage, $table, $qr="", $pageNum){
+function pages_list($rowsPerPage, $table, $qr="", $pageNum=1){
 	global $dblink;
 	if($qr==""){
 		$query   = "SELECT COUNT(*) AS numrows FROM $table";

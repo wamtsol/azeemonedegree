@@ -11,6 +11,7 @@ function get_config($var){
 			return unslash($rowConfig["value"]);
 	}
 }
+$role = dofetch(doquery("select * from admin_type where id = '".$_SESSION["logged_in_admin"]["admin_type_id"]."'",$dblink));
 $admin_types = array("No","Yes");
 $account_type = array("Current Assets","Fixed Assets","Capital");
 $admin_email=get_config("admin_email");
@@ -1274,22 +1275,6 @@ function get_customer_balance( $customer_id, $dt = 0 ){
 	}
 	return $balance;
 }
-function get_store_balance( $store_id, $dt = 0 ){
-	global $dblink;
-	if( empty( $dt ) ) {
-		$dt = date( "Y-m-d H:i:s" );
-	}
-	$balance = 0;
-	$store = doquery( "select balance from store where id = '".$store_id."'", $dblink );
-	if( numrows( $store ) > 0 ) {
-		$store = dofetch( $store );
-		$sql="select sum(amount) as amount from (select concat( 'Stock Move #', id) as transaction, net_price as amount from stock_movement where store_id = '".$store_id."' and datetime_added <='".$dt."' union select concat( 'Store Payment #', id) as transaction, -amount from store_payment where store_id = '".$store_id."' and datetime_added <='".$dt."') as transactions";
-		//echo $sql;
-		$balance=dofetch(doquery($sql,$dblink));
-		$balance = $store["balance"] + $balance[ "amount" ];
-	}
-	return $balance;
-}
 function get_supplier_balance( $supplier_id, $dt = 0 ){
 	global $dblink;
 	if( empty( $dt ) ) {
@@ -1299,7 +1284,7 @@ function get_supplier_balance( $supplier_id, $dt = 0 ){
 	$supplier = doquery( "select balance from supplier where id = '".$supplier_id."'", $dblink );
 	if( numrows( $supplier ) > 0 ) {
 		$supplier = dofetch( $supplier );
-		$sql="select sum(amount) as amount from (select concat( 'Purchase #', id) as transaction, net_price*if(type=0,1,-1) as amount from purchase where supplier_id = '".$supplier_id."' and datetime_added <='".$dt."' union select concat( 'Payment #', id) as transaction, -amount from supplier_payment where supplier_id = '".$supplier_id."' and datetime_added <='".$dt."') as transactions";
+		$sql="select sum(amount) as amount from (select concat( 'Purchase #', id) as transaction, net_price*if(type=0,1,-1) as amount from purchase where supplier_id = '".$supplier_id."' and datetime_added <'".$dt."' union select concat( 'Payment #', id) as transaction, -amount from supplier_payment where supplier_id = '".$supplier_id."' and datetime_added <='".$dt."') as transactions";
 		$balance=dofetch(doquery($sql,$dblink));
 		$balance = $supplier["balance"] + $balance[ "amount" ];
 	}

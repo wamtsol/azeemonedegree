@@ -7,6 +7,7 @@ else{
 	$supplier_name="";
 	$phone="";
 	$address="";
+    $balance=0;
 }
 ?>
 <div class="page-header">
@@ -49,6 +50,16 @@ else{
             </div>
             <div class="col-sm-10">
                 <textarea name="address" id="address" class="form-control"><?php echo $address; ?></textarea>
+            </div>
+        </div>
+  	</div>
+      <div class="form-group">
+    	<div class="row">
+            <div class="col-sm-2 control-label">
+                <label class="form-label" for="balance">Balance</label>
+            </div>
+            <div class="col-sm-10">
+                <input type="text" value="<?php echo $balance;?>" name="balance" id="balance" class="form-control" title="Enter balance">
             </div>
         </div>
   	</div>

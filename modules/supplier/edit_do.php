@@ -6,7 +6,7 @@ if(isset($_POST["supplier_edit"])){
 	if(empty($supplier_name))
 		$err="Fields with (*) are Mandatory.<br />";
 	if($err==""){
-		$sql="Update supplier set `supplier_name`='".slash($supplier_name)."',`phone`='".slash($phone)."', `address`='".slash($address)."'"." where id='".$id."'";
+		$sql="Update supplier set `supplier_name`='".slash($supplier_name)."',`phone`='".slash($phone)."', `address`='".slash($address)."', `balance`='".slash($balance)."'"." where id='".$id."'";
 		doquery($sql,$dblink);
 		unset($_SESSION["supplier_manage"]["edit"]);
 		header('Location: supplier_manage.php?tab=list&msg='.url_encode("Sucessfully Updated"));

@@ -115,7 +115,7 @@ if(!defined("APP_START")) die("No Direct Access");
                         </a></td>
                         <td class="text-center">
                             <a href="customer_payment_manage.php?tab=edit&id=<?php echo $r['id'];?>"><img title="Edit Record" alt="Edit" src="images/edit.png"></a>&nbsp;&nbsp;
-                            <a onclick="return confirm('Are you sure you want to delete')" href="customer_payment_manage.php?id=<?php echo $r['id'];?>&amp;tab=delete"><img title="Delete Record" alt="Delete" src="images/delete.png"></a>
+                            <?php if($role["can_delete"]==1){?><a onclick="return confirm('Are you sure you want to delete')" href="customer_payment_manage.php?id=<?php echo $r['id'];?>&amp;tab=delete"><img title="Delete Record" alt="Delete" src="images/delete.png"></a><?php }?>
                         </td>
                     </tr>
                     <?php 

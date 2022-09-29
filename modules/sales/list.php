@@ -156,7 +156,7 @@ if(!defined("APP_START")) die("No Direct Access");
                         <td class="text-center">
                             <a href="sales_manage.php?tab=edit&id=<?php echo $r['id'];?>"><img title="Edit Record" alt="Edit" src="images/edit.png"></a>&nbsp;&nbsp;
                             <a href="sales_manage.php?tab=print&id=<?php echo $r['id'];?>"><img title="Print Record" alt="Print" src="images/view.png"></a>&nbsp;&nbsp;
-                            <a onclick="return confirm('Are you sure you want to delete')" href="sales_manage.php?id=<?php echo $r['id'];?>&amp;tab=delete"><img title="Delete Record" alt="Delete" src="images/delete.png"></a>
+                            <?php if($role["can_delete"]==1){?><a onclick="return confirm('Are you sure you want to delete')" href="sales_manage.php?id=<?php echo $r['id'];?>&amp;tab=delete"><img title="Delete Record" alt="Delete" src="images/delete.png"></a><?php }?>
                             <!-- <a style="font-size: 18px;vertical-align: middle;margin-left: 5px;" href="sales_manage.php?tab=print_invoice&id=<?php echo $r['id'];?>"><i class="fa fa-print" aria-hidden="true"></i></a>&nbsp;&nbsp; -->
                         </td>
                     </tr>

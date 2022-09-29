@@ -4,7 +4,7 @@ include("include/utility.php");
 include("include/session.php");
 include("include/paging.php");
 define("APP_START", 1);
-$tab_array=array("list", "add", "edit", "status", "delete", "report", "bulk_action");
+$tab_array=array("list", "add", "edit", "status", "delete", "report", "report_print", "bulk_action");
 if(isset($_REQUEST["tab"]) && in_array($_REQUEST["tab"], $tab_array)){
 	$tab=$_REQUEST["tab"];
 }
@@ -30,6 +30,9 @@ switch($tab){
 	break;
 	case 'bulk_action':
 		include("modules/supplier/bulkactions.php");
+	break;
+	case 'report_print':
+		include("modules/supplier/report_print.php");
 	break;
 }
 ?>

@@ -6,10 +6,10 @@ if(isset($_POST["supplier_add"])){
 	if(empty($supplier_name))
 		$err="Fields with (*) are Mandatory.<br />";
 	if($err==""){
-		$sql="INSERT INTO supplier (supplier_name, phone, address) VALUES ('".slash($supplier_name)."','".slash($phone)."','".slash($address)."')";
+		$sql="INSERT INTO supplier (supplier_name, phone, address, balance) VALUES ('".slash($supplier_name)."','".slash($phone)."','".slash($address)."','".slash($balance)."')";
 		doquery($sql,$dblink);
 		unset($_SESSION["supplier_manage"]["add"]);
-		header('Location: supplier_manage.php?tab=list&msg='.url_encode("Sucessfully Added"));
+		header('Location: supplier_manage.php?tab=list&msg='.url_encode("Successfully Added"));
 		die;
 	}
 	else{

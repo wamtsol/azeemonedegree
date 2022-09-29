@@ -53,6 +53,7 @@ if(!empty($q)){
                 <th>Supplier Name</th>
                 <th>Phone</th>
                 <th>Address</th>
+                <th>Balance</th>
                 <th class="text-center">Status</th>
                 <th class="text-center">Actions</th>
             </tr>
@@ -74,6 +75,7 @@ if(!empty($q)){
                         <td><?php echo unslash($r["supplier_name"]); ?></td>
                         <td><?php echo unslash($r["phone"]); ?></td>
                         <td><?php echo unslash($r["address"]); ?></td>
+                        <td><?php echo get_supplier_balance($r["id"]);?></td>
                         <td class="text-center"><a href="supplier_manage.php?id=<?php echo $r['id'];?>&tab=status&s=<?php echo ($r["status"]==0)?1:0;?>">
                             <?php
                             if($r["status"]==0){
@@ -108,14 +110,14 @@ if(!empty($q)){
                         </select>
                         <input type="button" name="apply" value="Apply" id="apply_bulk_action" class="btn btn-light" title="Apply Action"  />
                     </td>
-                    <td colspan="3" class="paging" title="Paging" align="right"><?php echo pages_list($rows, "supplier", $sql, $pageNum)?></td>
+                    <td colspan="4" class="paging" title="Paging" align="right"><?php echo pages_list($rows, "supplier", $sql, $pageNum)?></td>
                 </tr>
                 <?php	
             }
             else{	
                 ?>
                 <tr>
-                    <td colspan="7"  class="no-record">No Result Found</td>
+                    <td colspan="8"  class="no-record">No Result Found</td>
                 </tr>
                 <?php
             }
